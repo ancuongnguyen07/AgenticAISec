@@ -16,7 +16,7 @@ agentic AI security. If you are also in the same ship (travel to agentic AI
 island) and have the same toolbox (solid background in system security
 or applied cryptography), I hope this repo is helpful along your journey.
 
-*Note: this repo is still actively modified (last updated: 11th Dec 2025)*
+*Note: this repo is still actively modified*
 
 # LLM/AgenticAI security courses
 
@@ -52,19 +52,36 @@ Large Language Model (LLM)
 TOP 10 security risks for LLM-integrated applications from OWASP:
 https://genai.owasp.org/llm-top-10/
 
-According to the OWASP's report, *Prompt Injection Attack* (PIA),
-or more specifically *Indirect Prompt Injection Attack* (IPIA), is cited as the 
+According to the OWASP's report, *Prompt Injection* (PI),
+or more specifically *Indirect Prompt Injection* (IPI), is cited as the 
 #1 security threat.
 
 ## Prompt Injection
+According to [Liu+2024](https://www.usenix.org/conference/usenixsecurity24/presentation/liu-yupei),
+IPI defense can be split into two types: detection
+and prevention.
 
 # State-of-the-art (SOTA) defense mechanisms
 
-## Model-level defense
+The table below summarizes what SOTA solutions to address IPI that I have
+collected in the wild.
 
-## System-level defense
+*Last updated: 12/12/2025*
 
-## Summary
+|                                                                                     | Defense Type           | Level  | Determinism        | Model modification | Note                                                                                                                                                                                 |   |
+|-------------------------------------------------------------------------------------|------------------------|--------|--------------------|--------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+| [AttentionTracker](https://aclanthology.org/2025.findings-naacl.123/)               | Detection              | Model  | :grey_question:    | :white_check_mark: | Utilize statistical attention patterns of user prompts                                                                                                                               |   |
+| [PromptShield](https://arxiv.org/abs/2501.15145)                                    | Detection              | Model  | :grey_question:    | :x:                |                                                                                                                                                                                      |   |
+| [TaskTracker](https://arxiv.org/abs/2406.00799)                                     | Detection              | Model  | :x:                | :x:                | Utilize LLM activations to detect task drift caused by IPI                                                                                                                           |   |
+| [Spotlighting]( https://arxiv.org/abs/2403.14720)                                   | Prevention             | Prompt | :x:                | :x:                | Separate data and instruction through dedicated token (e.g., <>), or encoding (e.g., base64)                                                                                         |   |
+| [SecAlign](https://dl.acm.org/doi/abs/10.1145/3719027.3744836)                      | Prevention             | Model  | :x:                | :white_check_mark: | Applying preference optimization technique during fine-tuning.                                                                                                                       |   |
+| [StruQ](https://www.usenix.org/conference/usenixsecurity25/presentation/chen-sizhe) | Prevention             | Model  | :x:                | :white_check_mark: | Introduce additional LLM to separate user instructions from untrusted external data through distinct data processing channels                                                        |   |
+| [RENNERVATE](https://arxiv.org/abs/2512.08417)                                      | Detection and Recovery | Token  | :grey_question:    | :x:                | Utilize attention feature at the token-level                                                                                                                                         |   |
+| [IsolateGPT](https://arxiv.org/abs/2403.04960)                                      | Prevention             | System | :grey_question:    | :x:                | Isolate execution environments among applications, requires user interventions for potentially dangerous actions (such as cross-application interaction).                            |   |
+| [f-secure](https://arxiv.org/abs/2409.19091)                                        | Prevention             | System | :white_check_mark: | :x:                | Propose an information-flow enforcement approach that requires manual pre-labelling of data sources as *trusted* or *untrusted*.                                                     |   |
+| [CaMeL](https://arxiv.org/abs/2503.18813)                                           | Prevention             | System | :white_check_mark: | :x:                | Extracts control and data flows from trusted user queries and employs a custom interpreter to prevent untrusted data from affecting program flow.                                    |   |
+| [Progent](https://arxiv.org/abs/2504.11703)                                         | Prevention             | System | :white_check_mark: | :x:                | Dynamically generate security policies at runtime, aka programmable security policy enforcement.                                                                                     |   |
+| [GuardAgent](https://openreview.net/pdf?id=2nBcjCZrrP)                              | Prevention             | System | :grey_question:    | :x:                | *guardrails for LLM agents*. This is LLM *agent* designed to safeguard other LLM agents, which differs from several approaches utilizing *models* to safeguard *models* or *agents*. |   |
 
 # Security challenges in applying security principles to agentic systems
 Agentic systems have several challenges to apply time-tested security 
@@ -251,7 +268,6 @@ of LLM-integrated systems (LLM-based systems is born to help users get free
 from boring/repeated tasks).
 
 ## Mechanism: Information-Flow Control
-
 
 ## Long-term: Security Guarantees from Probabilistic TCB
 
