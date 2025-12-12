@@ -18,6 +18,29 @@ or applied cryptography), I hope this repo is helpful along your journey.
 
 *Note: this repo is still actively modified*
 
+- [SysSec-Crypt :heart: LLM-AgenticAI](#syssec-crypt-heart-llm-agenticai)
+- [LLM/AgenticAI security courses](#llmagenticai-security-courses)
+  - [LLM courses](#llm-courses)
+  - [Agentic AI courses](#agentic-ai-courses)
+- [Premilinaries](#premilinaries)
+  - [What is LLM?](#what-is-llm)
+  - [What is Agentic AI?](#what-is-agentic-ai)
+- [Current security threats](#current-security-threats)
+  - [Prompt Injection](#prompt-injection)
+- [State-of-the-art (SOTA) defense mechanisms](#state-of-the-art-sota-defense-mechanisms)
+- [Security challenges in applying security principles to agentic systems](#security-challenges-in-applying-security-principles-to-agentic-systems)
+  - [Probabilistic TCB](#probabilistic-tcb)
+  - [Dynamic security policies, and privilege control](#dynamic-security-policies-and-privilege-control)
+  - [Fuzzy security boundary](#fuzzy-security-boundary)
+  - [Prompt injections vs Dynamic Code Loading](#prompt-injections-vs-dynamic-code-loading)
+- [Open research directions](#open-research-directions)
+  - [Mechanism: Separating Instruction and Data](#mechanism-separating-instruction-and-data)
+  - [Mechanism: Access Control and Least Privilege](#mechanism-access-control-and-least-privilege)
+  - [Mechanism: Information-Flow Control](#mechanism-information-flow-control)
+  - [Long-term: Security Guarantees from Probabilistic TCB](#long-term-security-guarantees-from-probabilistic-tcb)
+  - [Long-term: Security-Aware Model Architecture](#long-term-security-aware-model-architecture)
+
+
 # LLM/AgenticAI security courses
 
 ## LLM courses
