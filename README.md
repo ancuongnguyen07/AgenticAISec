@@ -44,9 +44,22 @@ https://web.stanford.edu/class/cs329t/index.html#overview
 
 # Premilinaries
 ## What is LLM?
-Large Language Model (LLM)
+Large Language Model (LLM) exel in a wide range of Natural Language
+Processing (NLP) tasks (look at this [survey](https://www.researchgate.net/profile/Tang-Tianyi-3/publication/369740832_A_Survey_of_Large_Language_Models/links/665fd2e3637e4448a37dd281/A-Survey-of-Large-Language-Models.pdf)).
+Given a prompt, an LLM tokenizes it into token-level embeddings and generates
+a response token sequence in an autoregressive manner which maximize the
+probability of tokens appeared in the response sequence. 
 
 ## What is Agentic AI?
+Agentic AI is an autonomy system based LLM to automatically makes decisions
+and executes task given the user's prompt. Unlike traditonal AI system,
+which primarily response to commands, genrating text-based contents
+regarding user's prompts, agentic AI can interact with external worlds,
+websites, APIs, devices.
+
+For example, a user can ask agentic AI to book a flight, including
+searching suitable flights, reserve seats, and make a payment automatically
+(without human intervention) given just a text command
 
 # Current security threats
 TOP 10 security risks for LLM-integrated applications from OWASP:
@@ -268,7 +281,54 @@ of LLM-integrated systems (LLM-based systems is born to help users get free
 from boring/repeated tasks).
 
 ## Mechanism: Information-Flow Control
+Access control is a "on/off" switch that allows an agent has access to
+particular resources or tools. In many cases, the agent needs access to
+a specific resource, or tool, for just a particular task (a function call)
+but not all other calls (similar to the dynamic permission control of Android
+in which a mobile app can request a permission per specific task, a user
+will be prompted "Allow only for this time"). For example, a coding agent needs 
+access to
+API keys to perform operations like uploading Docker container image to
+the endpoint. In such cases, the access-control policy will state that
+the agent has a legitimate reason to access such that sensitive information.
+Following the *Least Privilege* principle, the agent must use that information
+for *only* uploading Docker image but nothing else. There should be a
+mechannism to guarantee that the flow of sensitive information (API key
+in the example) indeed transmit from the agent to the endpoint.
+This is where information-flow control (IFC) comes to play.
+
+The IFC works by labelling data. By tracking labelled-data and enforcing
+label-based policy, the system can assure that the data flow travels
+as it is expected. The mechanism behind labeling and tracking is
+[flow arithmetic](https://dl.acm.org/doi/pdf/10.1145/360051.360056).
+Labeling and tracking can be done at many granularities, such as
+processor-instruction level, program-variable level, filesystem-level,
+cross-computer level.
+
+In LLM-based systems, it is still an open problem to perform flow arithmetic
+on data fed into LLMs since there is no discrete boundary between types of data
+(they are all tokens under LLM). Hence, every piece of data could be labeled
+as "everything", leading the issue of label exploision.
 
 ## Long-term: Security Guarantees from Probabilistic TCB
+At the core level, the LLM itself is probabilistic, so a patient and
+determined attacker can bypass security guards that LLM-based application
+equips (thereotically an attacker can agressively generate malicious prompt or does
+prompt optimization to bypass).
+
+The problem is further complicated by the requirement that the probabilistic TCB
+must be resistant under Byzantine assumptions, meaning that worst-case
+attackers (adaptive, non-rational, not computationally bounded).
+
+Another problem is that the AI agent itself may counterintuively try to evade
+the security policy due to their propensity to [reward hacking](https://arxiv.org/abs/2502.13295)
 
 ## Long-term: Security-Aware Model Architecture
+Until now, the common approaches place security enhancement outside the agent
+(at system level) or retrain the agent to deal with security-aware tasks (at
+model level). Another alternative may be to substantially enhance an already
+trainedagent to enforce some security policy. If a circuit in the model is
+found to address security-relevant aspect of a task and the security policy
+blocks that aspect under some condition, it may be possible to enhance that
+circuit to discard its outputs when condition holds, as proposed in
+[AttentionTracker](https://aclanthology.org/2025.findings-naacl.123/).
